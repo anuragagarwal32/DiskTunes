@@ -1,0 +1,60 @@
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <!-- Configuration for the default package. -->
+    <package name="default" extends="struts-default">
+       <!-- <interceptors>
+                <interceptor class="com.project.LoginInterceptor" name="Lower" />
+        </interceptors> -->
+        <action name="loginAction" class="com.project.Login">
+        <!--    <interceptor-ref name="params"/>
+            <interceptor-ref name="Lower"/>    -->
+            <result name="Success">dashboard.jsp</result>
+            <result name="input">index.jsp</result>
+            <result name="Fail">index.jsp</result>
+            <result name="Error">error.jsp</result>
+        </action>
+        <action name="AddOrder" class="com.project.AddOrder">
+            <result name="Success">dashboard.jsp</result>
+            <result name="input">orderplace.jsp</result>
+            <result name="Fail">orderplace.jsp</result>
+            <result name="Error">error.jsp</result>
+        </action>
+        <action name="mufaAction" class="com.project.MufaInsert">
+            <result name="Success">Mufa.jsp</result>
+            <result name="input">Mufa.jsp</result>
+            <result name="Fail">Mufa.jsp</result>
+            <result name="Error">error.jsp</result>
+        </action>
+        <action name="addStock" class="com.project.AddStock">
+            <result name="Success">dashboard.jsp</result>
+            <result name="input">AddStock.jsp</result>
+            <result name="Fail">AddStock.jsp</result>
+            <result name="Error">error.jsp</result>
+        </action>
+        <action name="deleteStock" class="com.project.DeleteStock">
+            <result name="Success">dashboard.jsp</result>
+            <result name="input">deleteStock.jsp</result>
+            <result name="Fail">deleteStock.jsp</result>
+            <result name="Error">error.jsp</result>
+        </action>
+        <action name="DeleteOrder" class="com.project.DeleteOrder">
+            <result name="Success">Thankyou.jsp</result>
+            <result name="input">DeleteOrder.jsp</result>
+            <result name="Fail">DeleteOrder.jsp</result>
+            <result name="Error">error.jsp</result>
+        </action>    
+        <action name="UpdateOrder" class="com.project.UpdateOrder">
+            <result name="Success">Thankyou.jsp</result>
+            <result name="input">UpdateOrder.jsp</result>
+            <result name="Fail">UpdateOrder.jsp</result>
+            <result name="Error">error.jsp</result>
+        </action> 
+        <action name="checkPlacedorders" class="com.project.CheckPlacedOrders">
+            <result name="Success">checkPlacedOrders.jsp</result>
+            <result name="Error">error.jsp</result>
+        </action>
+    </package>
+</struts>

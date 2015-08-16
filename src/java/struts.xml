@@ -1,0 +1,121 @@
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <!-- Configuration for the default package. -->
+    <package name="default" extends="struts-default">
+        <!--
+        <global-results>
+            <result name="indexpage">/index.jsp</result>
+        </global-results>
+        <interceptors>
+            <interceptor name="index" class="com.project.indexInterceptor" />
+                <interceptor-stack name="stackForIndex">
+                    <interceptor-ref name="login"/>
+                    <interceptor-ref name="defaultStack"/>
+                </interceptor-stack>
+        </interceptors> 
+        <default-interceptor-ref name="stackForIndex"/> 
+        
+        <interceptors>
+            <interceptor class="com.project.SessionInterceptor" name="session" />
+            <interceptor-stack name="sessionstack">    
+                <interceptor-ref name="params"/>
+                <interceptor-ref name="session"/>    
+            </interceptor-stack>
+        </interceptors>
+        
+        <default-interceptor-ref name="session"/>-->
+        <action name="loginAction" class="com.project.Login">
+            <!--
+            <default-interceptor-ref name="session"/>
+            -->        
+            <result name="Success">dashboard.jsp</result>
+            <result name="input">login.jsp</result>
+            <result name="Login">dashboard.jsp</result>
+            <result name="Fail">login.jsp</result>
+            <result name="Error">error.jsp</result>
+        </action>
+        <action name="signOut" class="com.project.SignOut">
+            <result name="Success">index.jsp</result>
+            <result name="Fail">error.jsp</result>
+            <result name="Error">error.jsp</result>
+        </action>
+        <action name="signUpAction" class="com.project.SignUp">
+            <result name="Success">dashboard.jsp</result>
+            <result name="input">SignUp.jsp</result>
+            <result name="Fail">SignUp.jsp</result>
+            <result name="Error">error.jsp</result>
+        </action>
+        
+        <action name="mufaAction" class="com.project.MufaInsert">
+            <result name="Success">Mufa.jsp</result>
+            <result name="input">Mufa.jsp</result>
+            <result name="Fail">Mufa.jsp</result>
+            <result name="Error">error.jsp</result>
+        </action>
+        <action name="addStock" class="com.project.AddStock">
+            <result name="Success">dashboard.jsp</result>
+            <result name="input">AddStock.jsp</result>
+            <result name="Fail">AddStock.jsp</result>
+            <result name="Error">error.jsp</result>
+        </action>
+        <action name="deleteStock" class="com.project.DeleteStock">
+            <result name="Success">dashboard.jsp</result>
+            <result name="input">deleteStock.jsp</result>
+            <result name="Fail">deleteStock.jsp</result>
+            <result name="Error">error.jsp</result>
+        </action>
+        <action name="DeleteOrder" class="com.project.DeleteOrder">
+            <result name="Success">Thankyou.jsp</result>
+            <result name="input">DeleteOrder.jsp</result>
+            <result name="Fail">DeleteOrder.jsp</result>
+            <result name="Error">error.jsp</result>
+        </action>    
+        <action name="checkPlacedorders" class="com.project.CheckPlacedOrders">
+            <result name="Success">checkPlacedOrders.jsp</result>
+            <result name="Error">error.jsp</result>
+        </action>
+        <action name="ViewAllStock" class="com.project.ViewAllStock">
+            <result name="Success">ViewAllStock.jsp</result>
+            <result name="Error">error.jsp</result>
+        </action>
+        <action name="productView" class="com.project.productView">
+            <!-- Change Sucess product.jsp-->
+            <result name="Success">index.jsp</result>
+            <result name="Fail">error.jsp</result>
+            <result name="Error">error.jsp</result>
+        </action>
+        <action name="search" class="com.project.Search">
+            <result name="Success">search.jsp</result>
+            <result name="Fail">search.jsp</result>
+            <result name="Error">error.jsp</result>
+        </action>
+        <action name="addToCart" class="com.project.Cart">
+            <result name="Success">../cart.jsp</result>
+            <result name="Fail">error.jsp</result>
+            <result name="Error">error.jsp</result>
+        </action>
+        <action name="cartView" class="com.project.CartView">
+            <result name="Success">cart.jsp</result>
+            <result name="Fail">error.jsp</result>
+            <result name="Error">error.jsp</result>
+        </action>
+        <action name="updateCart" class="com.project.CartUpdate">
+            <result name="Success">cart.jsp</result>
+            <result name="Fail">cart.jsp</result>
+            <result name="Error">error.jsp</result>
+        </action>
+        <action name="deleteCart" class="com.project.CartDelete">
+            <result name="Success">cart.jsp</result>
+            <result name="Fail">cart.jsp</result>
+            <result name="Error">error.jsp</result>
+        </action>
+        <action name="placeOrder" class="com.project.CartPlaceOrder">
+            <result name="Success">Thankyou.jsp</result>
+            <result name="Fail">error.jsp</result>
+            <result name="Error">error.jsp</result>
+        </action>
+    </package>
+</struts>

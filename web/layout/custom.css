@@ -1,0 +1,30 @@
+html{
+    overflow-y: auto;
+    height:1000px;
+}
+.bodyTag{
+    position:absolute;
+    padding:5px;
+    left:30%;
+    top:280px;
+    width:480px;
+    border:solid 2px;
+    border-color: white;
+}
+.heading{
+    position:relative;
+    text-align: center;
+    font-family: Georgia;
+    font-size: 20px;
+}
+table{
+    padding:5px;
+    width: 100%;
+}
+.fCol{
+    color:#e42eb5;
+}
+.submitButton{
+    position:relative;
+    
+}

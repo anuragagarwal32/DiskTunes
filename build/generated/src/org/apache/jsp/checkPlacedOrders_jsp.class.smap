@@ -1,0 +1,25 @@
+SMAP
+checkPlacedOrders_jsp.java
+JSP
+*S JSP
+*F
++ 0 checkPlacedOrders.jsp
+checkPlacedOrders.jsp
++ 1 header.html
+layout/header.html
+*L
+5,6:63
+1#1,29:68
+10#0,74:96
+83:197,13
+84,2:210
+85:261,5
+85,3:214
+87:279,5
+87,3:219
+89:297,5
+89,3:224
+91:315,5
+91,12:229
+102,7:172
+*E
