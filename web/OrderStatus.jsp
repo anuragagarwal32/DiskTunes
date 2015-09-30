@@ -1,12 +1,7 @@
-<%-- 
-    Document   : mufa
-    Created on : 26 Jul, 2015, 9:17:20 PM
-    Author     : ubuntu
---%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib uri="/struts-tags" prefix="s" %>
-<%@include file="layout/header.html" %>
+<%@include file="../layout/header.html" %>
+<%@include file="../layout/AdminLook.jsp" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -83,25 +78,20 @@
         </script>
     </head>
     <body>
+        <h1 class="heading">Order Status</h1>
         <div class="bodyTag">
         <center>
-        <h1>DISK TUNES</h1>
+            <br><br><br>
         <form >    
             <table>
             <tr>
                 <td class="fCol"> OrderID </td>
                 <td><input type="text" name="orderId" id="orderId" onkeyup="getStatus(this.value);"/></td>
             </tr>
-                <%--
-                <s:textfield name="loginId" id="loginId" onkeyup="getStatus(this.value);"/> 
-                --%>
             <tr>
                 <td class="fCol">Current Status</td> 
                 <td><input type="text" name="cstatus" id="cstatus" readonly="true"/></td>
             </tr>
-            <%--
-            <s:textfield name="cstatus" id="cstatus" readonly="true"/>
-            --%>
             </table>
         </form>
         </center>

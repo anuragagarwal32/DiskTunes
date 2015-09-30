@@ -1,7 +1,8 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="/struts-tags" prefix="s" %>
-<%@include file="layout/header.html" %>
+<%@include file="../layout/header.html" %>
+<%@include file="../layout/AdminLook.jsp" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -31,12 +32,10 @@
                     dataReceived =dataReceived.split(' ').join('');
                     if(dataReceived==-1)
                     {
-                       // document.write("Id Not Found! Try Again");
                         document.getElementById("submitButton").disabled=true;
                     }
                     else
-                    {
-                       // document.write("Id Found");
+                    {                       
                         document.getElementById("submitButton").disabled=false;
                     }
                 }
@@ -67,17 +66,16 @@
         </script>
     </head>
     <body>
+        <h1 class="heading">Delete Stock</h1>
         <div class="bodyTag">
         <center>
-        <h1>Delete Stock</h1>
+            <br><br><br>
         <form action="deleteStock.action" method="POST">
             <table>
-               
-                <tr>
+               <tr>
                     <td class="fCol">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Stock ID</td>
                     <td><input type="text" name="stockId" onchange="getId(this.value);"></td>
-          <%--  <s:textfield name="stockId" label="Stock Id" onchange="getId(this.value);"/>  --%>
-            </tr>
+                </tr>
             </table>
             <input type="submit" id="submitButton" name="submitButton" value="Delete Stock" disabled="true"/>
         </form>

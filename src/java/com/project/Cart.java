@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.apache.struts2.ServletActionContext;
 
@@ -26,6 +27,12 @@ public class Cart extends ActionSupport implements ModelDriven<Order>
     
     private Order obj=new Order();
     private DatabaseClass dbObj=new DatabaseClass();
+    private String url;
+
+    public String getUrl()
+    {
+     return url;
+    }
     @Override
     public String execute() throws Exception 
     {
@@ -40,25 +47,35 @@ public class Cart extends ActionSupport implements ModelDriven<Order>
             String LoginID;
             HttpSession session;
             HttpServletRequest request;
+            HttpServletResponse response;
             if(con!=null)
             {
+                response= ServletActionContext.getResponse();
                 request= ServletActionContext.getRequest();
                 session= request.getSession(false);
                 DiskID=Integer.parseInt(request.getParameter("DiskID"));
                 LoginID=(String) session.getAttribute("LoginID");
-                Quantity=Integer.parseInt(request.getParameter("Quantity"));
+                
+                if(request.getParameter("Quantity").equals(""))
+                {
+                    Quantity=0;
+                }    
+                else
+                {
+                    Quantity=Integer.parseInt(request.getParameter("Quantity"));
+                }
                 if(Quantity>0)
                 {
                     st=con.createStatement();
                     rs=st.executeQuery("SELECT Quantity FROM CartMaster WHERE LoginID='"+LoginID+"' AND DiskID="+DiskID + " AND OrderID=-1");
                     if(rs.next())
                     {
-                        //Update
                         previousQuantity = rs.getInt(1);
                         st= con.createStatement();
                         status=st.executeUpdate("UPDATE CartMaster SET Quantity="+(previousQuantity+Quantity)+" WHERE DiskID="+DiskID+" AND LoginID='"+LoginID+"' AND OrderID=-1");
                         if(status>0)
                         {
+                            url="../dashboard.jsp";
                             return "Success";
                         }
                         else
@@ -75,6 +92,7 @@ public class Cart extends ActionSupport implements ModelDriven<Order>
                         status= pst.executeUpdate();
                         if(status>0)
                         {
+                            url="../dashboard.jsp";
                             return "Success";
                         }
                         else

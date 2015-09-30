@@ -32,29 +32,29 @@ public class DeleteStock extends ActionSupport
             request= ServletActionContext.getRequest();
             String query;
             Statement st;
-            query="SELECT DiskID from StockMaster WHERE StockID="+getStockId();
+            query="SELECT DiskID from StockMaster WHERE DiskID="+getStockId();
             st=con.createStatement();
             ResultSet rs= st.executeQuery(query);
             if(rs.next())
             {
                 int diskId= rs.getInt(1);
                 System.out.println(diskId);
-                query="DELETE FROM StockMaster WHERE StockID="+getStockId();
+                query="DELETE FROM StockMaster WHERE DiskID="+getStockId();
                 st= con.createStatement();
                 int status= st.executeUpdate(query);
                 if(status>0)
                 {
-                     File file=new File("/home/ubuntu/NetBeansProjects/DiskTunes/web/product/"+diskId+".jsp");
+                     File file=new File("/home/raxor/NetBeansProjects/DiskTunes/web/product/"+diskId+".jsp");
                      if(file.delete())
                      {
-                         File imageFile=new File("/home/ubuntu/NetBeansProjects/DiskTunes/web/product/image/"+diskId+".jpg");
+                         File imageFile=new File("/home/raxor/NetBeansProjects/DiskTunes/web/product/image/"+diskId+".jpg");
                          if(imageFile.delete())
                          {
                              request.setAttribute("msg", "Stock Successfully Deleted");
                          }
                          else
                          {
-                             request.setAttribute("err", "Error Occured! Please Try Again Later file");
+                             request.setAttribute("err", "Error Occured! Please Try Again Later");
                              return "Fail";
                          }
                      }

@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -63,8 +64,8 @@ public class AddStock extends ActionSupport implements ModelDriven<Stock>
                 status=st.executeUpdate(query);
                 if(status>0)
                 {
-                    String imagePath="/home/ubuntu/NetBeansProjects/DiskTunes/web/product/image/";
-                    String jspPath="/home/ubuntu/NetBeansProjects/DiskTunes/web/product/";
+                    String imagePath="/home/raxor/NetBeansProjects/DiskTunes/web/product/image/";
+                    String jspPath="/home/raxor/NetBeansProjects/DiskTunes/web/product/";
                     System.out.println("Content type "+getObj().getImageContentType());
                     try
                     {   
@@ -73,17 +74,104 @@ public class AddStock extends ActionSupport implements ModelDriven<Stock>
                         jspFile=new FileWriter(jspPath+diskId+".jsp");
                         jspFile.write("<%@page contentType=\"text/html\" pageEncoding=\"UTF-8\"%>\n" +
                                         "<%@taglib uri=\"/struts-tags\" prefix=\"s\" %>\n" +
-                                        "<%@include file=\"layout/header.html\" %>\n" +
+                                        "<%@include file=\"../layout/header.html\" %>\n" +
+                                        "<%@taglib uri=\"http://java.sun.com/jsp/jstl/core\" prefix=\"c\"%>"+
                                         "<!DOCTYPE html>\n" +
                                         "<html>\n" +
                                         "    <head>\n" +
                                         "        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n" +
-                                        "        <link type=\"text/css\" rel=\"stylesheet\" href=\"layout/product.css\" />\n" +
-                                        "        <title>Disk Tunes</title>\n" +
+                                        "        <link type=\"text/css\" rel=\"stylesheet\" href=\"../layout/custom.css\" />\n" +
+                                        "        <link type=\"text/css\" rel=\"stylesheet\" href=\"../layout/product.css\" />"+
+                                        "        <style>\n" +
+                                    "            .songNameFinal{\n" +
+                                    "                position: relative;\n" +
+                                    "                top: -10px;\n" +
+                                    "                font-size: 35px;\n" +
+                                    "                color: #8efd39;\n" +
+                                    "                font-family: Hobo Std;\n" +
+                                    "            }\n" +
+                                        "        </style>"+
+                                        "        <script type=\"text/javascript\">\n" +
+                                        "            function checkQuantity(quantity)\n" +
+                                        "            {   \n" +
+                                        "                xmlHttp=GetXmlHttpObject();\n" +
+                                        "                \n" +
+                                        "                if(xmlHttp==null)\n" +
+                                        "                {\n" +
+                                        "                    alert(\"Your Browser Does Not Support This Website! Kindly Update your Browser\");\n" +
+                                        "                    return;\n" +
+                                        "                }\n" +
+                                        "                \n" +
+                                        "                var url=\"quantityAjax.jsp?id=\"+"+diskId+";\n" +
+                                        "                xmlHttp.onreadystatechange= displayQuantity;\n" +
+                                        "                xmlHttp.open(\"GET\",url,true);\n" +
+                                        "                xmlHttp.send();\n" +
+                                        "            }\n" +
+                                        "            \n" +
+                                        "            function displayQuantity()\n" +
+                                        "            {   \n" +
+                                        "                document.getElementById(\"submit\").disabled=true;\n" +
+                                        "                \n" +
+                                        "                if((xmlHttp.readyState==4 || xmlHttp.readyState==\"complete\")&& xmlHttp.status==200)\n" +
+                                        "                {\n" +
+                                        "                    var dataReceived=parseInt(xmlHttp.response);\n" +
+                                        "                    if(dataReceived===-1)\n" +
+                                        "                    {\n" +
+                                        "                        alert(\"Invalid ID\");\n" +
+                                        "                        document.getElementById(\"submit\").disabled=true;\n" +
+                                        "                    }\n" +
+                                        "                    else if(dataReceived < document.getElementById(\"Quantity\").value)\n" +
+                                        "                    {\n" +
+                                        "                        \n" +
+                                        "                        alert(\"Stock Less\\nQuantity Left : \"+dataReceived);\n" +
+                                        "                        document.getElementById(\"submit\").disabled=true;\n" +
+                                        "                    }\n" +
+                                        "                    else\n" +
+                                        "                    {\n" +
+                                        "                        document.getElementById(\"submit\").disabled=false;\n" +
+                                        "                    }\n" +
+                                        "                    \n" +
+                                        "                }\n" +
+                                        "                \n" +
+                                        "            }\n" +
+                                        "            function GetXmlHttpObject()\n" +
+                                        "            {   \n" +
+                                        "                var xmlHttp=null;\n" +
+                                        "                try\n" +
+                                        "                {\n" +
+                                        "                    xmlHttp=new XMLHttpRequest();\n" +
+                                        "                }\n" +
+                                        "                catch(e)\n" +
+                                        "                {\n" +
+                                        "                    try\n" +
+                                        "                    {\n" +
+                                        "                        xmlHttp=new ActiveXObject(\"Msxml2.XMLHTTP\");\n" +
+                                        "                        \n" +
+                                        "                    }\n" +
+                                        "                    catch(e)\n" +
+                                        "                    {\n" +
+                                        "                        xmlHttp=new ActiveXObject(\"Microsoft.XMLHTTP\");\n" +
+                                        "                    }\n" +
+                                        "                }\n" +
+                                        "                return xmlHttp;\n" +
+                                        "                \n" +
+                                        "            } \n" +
+                                        "        </script>"+
                                         "    </head>\n" +
                                         "    <body>\n" +
+                                        "   <c:if test=\"${sessionScope.LoginID ne null}\">\n" +
+                                        "            <%@include file=\"layout/UserLook.jsp\" %>\n" +
+                                        "        </c:if>\n" +
+                                        "        <c:if test=\"${sessionScope.LoginID eq null}\">\n" +
+                                        "            <form class=\"logInButton\" action=\"../login.jsp\">\n" +
+                                        "                <input type=\"submit\" value=\"LOG IN\"/>\n" +
+                                        "            </form>\n" +
+                                        "            <form class=\"signUpButton\" action=\"../SignUp.jsp\">\n" +
+                                        "                <input type=\"submit\" value=\"SIGN UP\"/>\n" +
+                                        "            </form>\n" +
+                                        "        </c:if>"+
                                         "        <div class=\"product\">    \n" +
-                                        "            <div class=\"songName\"><h1>"+obj.getName()+"</h1></div>\n" +
+                                        "            <div class=\"songNameFinal\"><h1>"+obj.getName()+"</h1></div><br><br><br><br>\n" +
                                         "                <img src=\"image/"+diskId+".jpg\" class=\"productImage\"/><br/>\n" +
                                         "                <table>\n" +
                                         "                    <tr>\n" +
@@ -107,16 +195,18 @@ public class AddStock extends ActionSupport implements ModelDriven<Stock>
                                         "                        <td>"+obj.getDesc()+"</td>\n" +
                                         "                    </tr>\n" +
                                         "\n" +
-                                        "                <table>\n" +
+                                        "                </table>\n" +
                                         "                    <br /><br />\n" +
                                         "                <div class=\"price\"> Rs. "+obj.getPrice()+" </div>    \n" +
-                                        "                <center>\n" +
+                                        " <c:if test=\"${sessionScope.LoginID ne null}\">\n" +
+                                        "                    <center>\n" +
                                         "                    <form action=\"addToCart.action\" method=\"POST\" class=\"buyNow\"><br/>\n" +
-                                        "                    <input type=\"hidden\" name=\"DiskID\" value=\""+diskId+"\" /> \n"+
-                                        "                    <input type=\"textfield\" name=\"Quantity\" size=\"5\" placeholder=\"Quantity\"/><br/>\n" +
+                                        "                    <input type=\"hidden\" name=\"DiskID\" value=\""+diskId+"\"/> \n" +
+                                        "                    <input type=\"text\" name=\"Quantity\" size=\"5\" placeholder=\"Quantity\"/><br/>\n" +
                                         "                    <input type=\"submit\" value=\"Add To Cart\"/><br/>\n" +
                                         "                    </form>\n" +
                                         "                </center>\n" +
+                                        "                </c:if>"+
                                         "        </div>\n" +
                                         "    </body>\n" +
                                         "</html>");
@@ -196,5 +286,4 @@ public class AddStock extends ActionSupport implements ModelDriven<Stock>
     {
         this.dbObj = dbObj;
     }
-    
 }

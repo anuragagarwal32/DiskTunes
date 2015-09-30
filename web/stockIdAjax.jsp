@@ -18,14 +18,13 @@
                 if(con!=null)
                 {
                     int data;
-                    System.out.println(request.getParameter("id"));
                     String query="SELECT StockID FROM StockMaster WHERE StockID="+request.getParameter("id");
                     Statement st= con.createStatement();
-                    System.out.println(query);
                     ResultSet rs= st.executeQuery(query);
                     if(rs.next())
                     {
                         data= rs.getInt(1); 
+                        
                     }
                     else
                     {

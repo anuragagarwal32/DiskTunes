@@ -34,7 +34,7 @@ public class CartDelete extends ActionSupport
             request= ServletActionContext.getRequest();
             session= request.getSession(false);
             st=con.createStatement();
-            diskID= Integer.parseInt(request.getParameter("diskID"));
+            diskID= Integer.parseInt(request.getParameter("DiskID"));
             status= st.executeUpdate("DELETE FROM CartMaster WHERE LoginID='"+session.getAttribute("LoginID")+"' AND DiskID="+diskID+" AND OrderID=-1");
             if(status > 0)
             {

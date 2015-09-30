@@ -28,9 +28,9 @@ public class CartPlaceOrder extends ActionSupport
         Connection con;
         PreparedStatement pst;
         Statement st;
-        ResultSet rs;
+        ResultSet rs,rs1, rs2;
         Date date1;
-        int status;
+        int status, bal;
         HttpServletRequest request;
         HttpSession session;
         try
@@ -38,7 +38,25 @@ public class CartPlaceOrder extends ActionSupport
             con=dbObj.getConnection();
             request= ServletActionContext.getRequest();
             session=request.getSession(false);
-            pst= con.prepareStatement("INSERT INTO OrderMaster(OrderDate, Status) VALUES (?,'Pending')");	
+            if(request.getParameter("pMethod").equals("bal"))
+            {
+                st=con.createStatement();
+                rs1= st.executeQuery("SELECT Balance FROM UserAccount WHERE LoginID='"+session.getAttribute("LoginID")+"'");
+                rs1.next();
+                bal= rs1.getInt(1);
+
+                if(bal < Integer.parseInt(request.getParameter("tPrice")) )
+                {
+                    request.setAttribute("err", "Insufficient Balance");
+                    return "Fail";
+                }
+                else
+                {
+                    st=con.createStatement();
+                    status= st.executeUpdate("UPDATE UserAccount SET Balance="+(bal-Integer.parseInt(request.getParameter("tPrice")))+" WHERE LoginID='"+session.getAttribute("LoginID")+"'");
+                }
+            }
+            pst= con.prepareStatement("INSERT INTO OrderMaster(OrderDate, Status, Price) VALUES (?,'Pending',?)");	
             date1 = new Date();
             int date,year,currentMonthInt=0;
             String month;
@@ -75,6 +93,7 @@ public class CartPlaceOrder extends ActionSupport
 
             }
             pst.setString(1, year+"-"+currentMonthInt+"-"+date);
+            pst.setInt(2, Integer.parseInt(request.getParameter("tPrice")));
             status=pst.executeUpdate();
             if(status<=0)
             {
@@ -86,11 +105,22 @@ public class CartPlaceOrder extends ActionSupport
             rs.next();
             int OrderID= rs.getInt(1);
             st=con.createStatement();
+            rs2= st.executeQuery("SELECT DiskID, Quantity FROM CartMaster WHERE LoginID='"+(String)session.getAttribute("LoginID")+"' AND OrderID=-1");
+            while(rs2.next())
+            {
+                st=con.createStatement();
+                status= st.executeUpdate("UPDATE StockMaster SET Quantity=Quantity-"+rs2.getInt(2)+" WHERE DiskID="+rs2.getInt(1));
+                if(status==0)
+                    return "Fail";
+            }
+            st=con.createStatement();
             status= st.executeUpdate("UPDATE CartMaster SET OrderID="+OrderID+" WHERE LoginID='"+(String)session.getAttribute("LoginID")+"' AND OrderID=-1");
             if(status>0)
                 return "Success";
             else
                 return "Fail";
+            
+            
         }
         catch(Exception e)
         {

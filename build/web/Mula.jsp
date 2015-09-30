@@ -1,7 +1,8 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib uri="/struts-tags" prefix="s" %>
 <%@include file="layout/header.html" %>
+<%@include file="layout/AdminLook.jsp" %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -72,29 +73,32 @@
         </script>
     </head>
     <body>
+        <h1 class="heading">Manage User Login Account</h1>
         <div class="bodyTag">
         <center>
-        <h1 class="heading">Manage User Login Account</h1>
-        <form action="statusAction.action">    
+            <br><br><br>
+        <form action="mulaAction.action" method="POST">    
             <table>
                 <tr>
                     <td>
-                        <span class="fCol">LoginID</span> 
+                        
+                        <td class="fCol">LoginID</td> 
+                        <td>
                         <input type="text" name="loginId" id="loginId" maxLength="45" onchange="getStatus(this.value);"/>
-                        <%--
-                        <s:textfield name="loginId" id="loginId" maxLength="45" onchange="getStatus(this.value);"/>
-                        --%>
-                        <span class="fCol">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Status</span>
-                        <select name="status" id="status">
-                        <option value="-1" selected disabled="true">Invalid ID</option>
-                        <option value="Activated">Activated</option>
-                        <option value="Deactivated">Deactivated</option>
-                        <option value="Delete">Delete</option>
-                   </select>
+                        </td>
+                        <td class="fCol">Status</td>
+                        <td>
+                            <select name="status" id="status">
+                                <option value="-1" selected="true" disabled="true">Invalid ID</option>
+                                <option value="Activated">Activated</option>
+                                <option value="Deactivated">Deactivated</option>
+                            </select>
+                        </td>
+                        
                     </td>
                 </tr>
             </table>
-            <input type="submit" value="Submit" id="submitButton" disabled="true">
+            <input type="submit" value="Submit" id="submitButton" disabled="true"/>
         </form>
         </center>
         </div>

@@ -2,6 +2,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="/struts-tags" prefix="s" %>
 <%@include file="layout/header.html" %>
+<%@include file="layout/UserLook.jsp" %>
 <!DOCTYPE html>
 <html>
     <head>

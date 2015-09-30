@@ -14,10 +14,10 @@ import java.sql.DriverManager;
  */
 public class DatabaseClass 
 {
-    String url = "jdbc:mysql://localhost:3306/DiskTunes";
+    String url = "jdbc:mysql://localhost:3306/disktunes";
     String driver = "com.mysql.jdbc.Driver";
     String userName = "root";
-    String password = "password";
+    String password = "";
     public Connection getConnection()
     {
         try

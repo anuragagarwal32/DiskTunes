@@ -1,13 +1,11 @@
-<%-- 
-    Document   : checkPlacedOrders
-    Created on : 2 Aug, 2015, 9:31:21 PM
-    Author     : Naveen Yadav
---%>
+
 
 <%@page import="java.sql.ResultSet"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="/struts-tags" prefix="s" %>
 <%@include file="layout/header.html" %>
+<%@include file="layout/AdminLook.jsp" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -68,9 +66,14 @@
             } 
         </script>
     </head>
+    <body>
+        <c:if test="${requestScope['javax.servlet.forward.request_uri'] ne '/DiskTunes/checkPlacedorders.action'}">
+            <c:redirect url="checkPlacedorders.action"/>
+        </c:if>
+        <h1 class="heading">All Placed Orders</h1>
         <div class="bodyTag">
         <center>
-        <h1 class="heading">All Placed Orders</h1>
+        <br><br><br>
         <table border="1">
                 <tr>
                     <th class="fCol">OrderID</th>
@@ -82,7 +85,7 @@
                 </tr>
                 <s:iterator value="userList">
              <tr>
-                 <td><s:property value="OrderID"/></td>
+                 <td><a href="orderViewParticular.action?id=<s:property value='OrderID'/>"><s:property value="OrderID"/></a></td>
                  
                  <td><s:property value="OrderDate"/></td>
                  
@@ -105,4 +108,5 @@
             <br><a href="checkPlacedorders.action" class="fCol">Refresh Page</a>
         </center>
         </div>
+    </body>
 </html>

@@ -95,7 +95,7 @@
     <body>
         <div class="bodyTag">
         <center>
-        <h1 class="heading">SIGN UP</h1>
+        <h1 class="headingCart">SIGN UP</h1>
         <form action="signUpAction.action" method="POST">
             <table>
                 <tr>

@@ -6,53 +6,45 @@
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
+<%@include file="layout/header.html" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        
+        <link type="text/css" rel="stylesheet" href="layout/custom.css" />
     </head>
     <body>
-        <h1>View All Stock</h1>
+        <c:if test="${sessionScope.LoginID ne null}">
+            <%@include file="layout/UserLook.jsp" %>
+        </c:if>
+        <h1 class="headingCart">Search Results</h1>
+        <div class="productTable">
         <table>
-            <%! 
-                int counter=0;
-            %>
+            <c:set var="counter" value="${0}"/>
+            
             <c:forEach var="list" items="${arrayList}">
-                <%
-                    if(counter==3)
-                    {
-                %>
-                <tr>
-                <%
-                    }
-                %>
+                <c:if test="${counter eq 3}">
+                    <tr>
+                </c:if>
                     
                     <td>
-                        <%
-                            counter++;
-                        %>
-                        <a href="product/${list.id}.jsp"><img src="product/image/${list.image}.jpg" height="100" width="100" /></a>
+                        <c:set var="counter" value="${counter=counter+1}"/>
+                        <a href="product/${list.id}.jsp"><img src="product/image/${list.image}.jpg" width="200" height="200"  /></a>
                         
                         <br />
-                        <a href="product/${list.id}.jsp">${list.name}</a>
+                        <a href="product/${list.id}.jsp" class="productListName">${list.name}</a>
                     </td>
-                <%
-                    if(counter==3)
-                    {
-                %>
-                </tr>
-                <%
-                    counter=0;
-                    }
-                %>
+                <c:if test="${counter eq 3}">
+                    <c:set var="counter" value="${counter=0}"/>
+                    </tr>
+                </c:if>
             </c:forEach>
         </table>
+        </div>
         <br /><br /><br />
         
         
-        <table>
+        <table class="pageNumberTable">
             <tr>
                 <td>
                     <c:if test="${currentPage !=1}" >
@@ -76,7 +68,5 @@
                 </td>
             </tr>
         </table>
-        
-        
     </body>
 </html>

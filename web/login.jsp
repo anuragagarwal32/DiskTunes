@@ -17,15 +17,9 @@
         <form action="loginAction.action" method="POST" class="loginForm">
             <div class="innerLogin">
                 Username <input type="text" name="username" id="username" />
-                <%--
-                    <s:textfield name="username" id="username" label="Username" />
-                --%>
             </div><br />
             <div class="innerLogin"> 
                 Password <input type="password" name="password" id="password" />
-                <%-- 
-                    <s:password name="password" id="password" label="Password" />
-                --%>
             </div><br />
             <div class="innerLogin"> <input type="submit" value="Login" name="login"/></div>
             <font color="red">${requestScope.err}</font>

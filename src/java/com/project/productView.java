@@ -34,6 +34,7 @@ public class productView extends ActionSupport implements ModelDriven<Product>
         Statement st;
         ResultSet rs;
         HttpServletRequest request;
+        HttpServletResponse response;
         int noOfRecords;
         int noOfPages;
         int noOfRecordsPerPage;
@@ -42,6 +43,7 @@ public class productView extends ActionSupport implements ModelDriven<Product>
         try
         {
             request= ServletActionContext.getRequest();
+            response= ServletActionContext.getResponse();
             noOfRecordsPerPage=12;
             page=1;
             if(request.getParameter("page")!=null)
@@ -91,7 +93,6 @@ public class productView extends ActionSupport implements ModelDriven<Product>
             request.setAttribute("arrayList", getArrayList());
             request.setAttribute("noOfPages", noOfPages);
             request.setAttribute("currentPage", page);
-            
         }
         catch(Exception e)
         {

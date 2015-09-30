@@ -10,6 +10,9 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import org.apache.struts2.ServletActionContext;
 
 /**
  *
@@ -24,12 +27,13 @@ public class SignUp extends ActionSupport implements ModelDriven<MemberDetail>
     {
         Connection con;
         PreparedStatement pst;
-        int status1, status2;
+        int status1, status2, status3;
         try
         {
             setDbObj(new DatabaseClass());
             con=getDbObj().getConnection();
-            
+            HttpServletRequest request= ServletActionContext.getRequest();
+            HttpSession sess;
             pst=con.prepareStatement("INSERT INTO MemberDetail values(?,?,?,?,?,?,?,?,?,?)");
             pst.setString(1, getObj().getLoginID());
             pst.setString(2, getObj().getFirstname());
@@ -44,14 +48,22 @@ public class SignUp extends ActionSupport implements ModelDriven<MemberDetail>
             
             status1=pst.executeUpdate();
             
-            pst=con.prepareStatement("INSERT INTO LoginMaster values(?,?,'User','Activated')");
+            pst=con.prepareStatement("INSERT INTO LoginMaster VALUES(?,?,'User','Activated')");
             pst.setString(1, getObj().getLoginID());
             pst.setString(2, getPassword());
             
             status2=pst.executeUpdate();
             
-            if(status1>0 && status2>0)
+            pst=con.prepareStatement("INSERT INTO UserAccount VALUES(?,0)");
+            pst.setString(1, getObj().getLoginID());
+            status3= pst.executeUpdate();
+            
+            if(status1>0 && status2>0 && status3>0)
             {
+                sess = request.getSession(true);
+                sess.setAttribute("LoginID", getObj().getLoginID());
+                sess.setAttribute("Role","User");
+                sess.setAttribute("Name", getObj().getFirstname());
                 return "Success";
             }
             else

@@ -18,7 +18,7 @@
                 {
                     int data;
                     System.out.println(request.getParameter("id"));
-                    String query="SELECT StockID FROM StockMaster WHERE StockID='"+request.getParameter("id")+"'";
+                    String query="SELECT DiskID FROM StockMaster WHERE DiskID="+Integer.parseInt(request.getParameter("id"));
                     Statement st= con.createStatement();
                     System.out.println(query);
                     ResultSet rs= st.executeQuery(query);

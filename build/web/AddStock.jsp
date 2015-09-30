@@ -1,18 +1,14 @@
-<%-- 
-    Document   : AddStock
-    Created on : 26 Jul, 2015, 11:35:28 PM
-    Author     : ubuntu
---%>
+
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="/struts-tags" prefix="s" %>
 <%@include file="layout/header.html" %>
+<%@include file="layout/AdminLook.jsp" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-         <link type="text/css" rel="stylesheet" href="layout/custom.css" />
-        
+        <link type="text/css" rel="stylesheet" href="layout/custom.css" />
         <script>
             function getId(id)
             {   
@@ -71,10 +67,11 @@
         </script>
     </head>
     <body>
+        <h1 class="heading">ADD STOCK</h1>
         <div class="bodyTag">
         <center>
-        <h1 class="heading">ADD STOCK</h1>
-        <form method="POST" action="addStock.action" enctype="multipart/form-data">
+            <br><br><br>
+        <s:form method="POST" action="addStock.action" enctype="multipart/form-data">
             <table>
                 <tr>
                     <td class="fCol">Stock ID</td>
@@ -119,13 +116,9 @@
                 
                 
             </table>
-            <%--
-                    <s:submit label="Add Stock" id="submitButton" disabled="true"/>
-                 --%>
             <input type="submit" id="submitButton" name="submitButton" class="submitButton" value="Add Stock" disabled="true"/>
        
-        </form>
-            ${requestScope.err}
+        </s:form>
         </center>
         </div>
     </body>

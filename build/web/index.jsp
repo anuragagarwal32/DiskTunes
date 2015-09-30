@@ -10,59 +10,54 @@
 <%@include file="layout/header.html" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
+
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        
+        <link type="text/css" rel="stylesheet" href="layout/custom.css" />
     </head>
     <body>
-        <c:if test="${requestScope['javax.servlet.forward.request_uri'] ne '/DiskTunes/productView.action'}">
-            <%
-                System.out.println("LOL HERE : "+request.getAttribute("javax.servlet.forward.request_uri"));
-                response.sendRedirect("productView.action");
-                
-            %>
+        <c:if test="${sessionScope.LoginID ne null}">
+            <%@include file="layout/UserLook.jsp" %>
         </c:if>
-        <!-- LOGIN FORM WAS HERE-->
+        <c:if test="${sessionScope.LoginID eq null}">
+            <form class="logInButton" action="login.jsp">
+                <input type="submit" value="LOG IN"/>
+            </form>
+            <form class="signUpButton" action="SignUp.jsp">
+                <input type="submit" value="SIGN UP"/>
+            </form>
+        </c:if>
+        
+        <c:if test="${requestScope['javax.servlet.forward.request_uri'] ne '/DiskTunes/productView.action'}">
+            <c:redirect url="productView.action"/>
+        </c:if>
             <br />
         ${requestScope.msg}
-        <h1>View All Stock</h1>
+        <div class="productTable">
         <table>
-            <%! 
-                int counter=0;
-            %>
+            <c:set var="counter" value="${0}"/>
+            
             <c:forEach var="list" items="${arrayList}">
-                <%
-                    if(counter==3)
-                    {
-                %>
-                <tr>
-                <%
-                    }
-                %>
-                    
+                <c:if test="${counter eq 3}">
+                    <tr>
+                </c:if>
                     <td>
-                        <%
-                            counter++;
-                        %>
-                        <a href="product/${list.id}.jsp"><img src="product/image/${list.image}.jpg" height="100" width="100" /></a>
+                        <c:set var="counter" value="${counter=counter+1}"/>
+                        <a href="product/${list.id}.jsp"><img src="product/image/${list.image}.jpg" width="200" height="200" /></a>
                         
                         <br />
-                        <a href="product/${list.id}.jsp">${list.name}</a>
+                        <a href="product/${list.id}.jsp" class="productListName">${list.name}</a>
                     </td>
-                <%
-                    if(counter==3)
-                    {
-                %>
-                </tr>
-                <%
-                    counter=0;
-                    }
-                %>
+                <c:if test="${counter eq 3}">
+                    <c:set var="counter" value="${counter=0}"/>
+                    </tr>
+                </c:if>
             </c:forEach>
         </table>
+        </div>
         <br /><br /><br />
-        <table>
+        <table class="pageNumberTable">
             <tr>
                 <td>
                     <c:if test="${currentPage !=1}" >
@@ -85,6 +80,8 @@
                     </c:if>
                 </td>
             </tr>
+            
         </table>
+        
     </body>
 </html>

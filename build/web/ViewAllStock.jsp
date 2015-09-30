@@ -1,14 +1,28 @@
-<%@page import="java.sql.ResultSet"%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="/struts-tags" prefix="s" %>
+<%@include file="layout/header.html" %>
+<%@include file="layout/AdminLook.jsp" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Disk Tunes</title>
+        <style>
+            .viewAllTable{
+                position: absolute;
+                top: 360px;
+                left: 23%;
+            }
+            .viewAllTable table{
+                border-collapse: separate;
+                border-spacing: 5px 3px;
+            }
+        </style>
     </head>
-        <h1>All Stock</h1>
-        <center><table border="1">
+        <h1 class="heading">All Stock</h1>
+        <div class="viewAllTable">
+            <table border="1">
                 <tr>
                     <th>Stock Name</th>
                     <th>Version</th>
@@ -29,8 +43,6 @@
                  <td><s:property value="Price"/></td>
              </tr>
              </s:iterator>
-            
             </table>
-            
-        </center>
+        </div>
 </html>

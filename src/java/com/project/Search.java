@@ -25,7 +25,7 @@ public class Search extends ActionSupport implements ModelDriven<Product>
     private Product productObj=null;
     private DatabaseClass dbObj=new DatabaseClass();
     private ArrayList<Product> arrayList;
-    
+    private String url;
     public String execute() throws Exception
     {
         
@@ -77,7 +77,6 @@ public class Search extends ActionSupport implements ModelDriven<Product>
                 getProductObj().setImage(rs.getString(1));
                 getArrayList().add(getProductObj());
             }
-            
             request.setAttribute("arrayList", getArrayList());
             request.setAttribute("noOfPages", noOfPages);
             request.setAttribute("currentPage", page);
@@ -88,6 +87,17 @@ public class Search extends ActionSupport implements ModelDriven<Product>
             e.printStackTrace();
             return "Error";
         }
+        /*
+        if(request.getRequestURL().toString().equals("http://localhost:8084/DiskTunes/product/search.action"))
+        {
+            url="../search.jsp";
+        }*/
+        if(request.getRequestURI().startsWith("/DiskTunes/product/"))
+        {
+            url="../";
+        }
+        
+        System.out.println(url);
         return "Success";
     }
 

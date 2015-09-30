@@ -14,56 +14,74 @@ import java.util.Date;
  */
 public class OrderMaster
 {
-    private int OrderID;
-    private Date OrderDate;
-    private String Status;
+    private int orderID;
+    private Date orderDate;
+    private String status;
+    private int price;
 
     /**
-     * @return the OrderID
+     * @return the orderID
      */
     public int getOrderID()
     {
-        return OrderID;
+        return orderID;
     }
 
     /**
-     * @param OrderID the OrderID to set
+     * @param orderID the orderID to set
      */
-    public void setOrderID(int OrderID)
+    public void setOrderID(int orderID)
     {
-        this.OrderID = OrderID;
+        this.orderID = orderID;
     }
 
     /**
-     * @return the OrderDate
+     * @return the orderDate
      */
     public Date getOrderDate()
     {
-        return OrderDate;
+        return orderDate;
     }
 
     /**
-     * @param OrderDate the OrderDate to set
+     * @param orderDate the orderDate to set
      */
-    public void setOrderDate(Date OrderDate)
+    public void setOrderDate(Date orderDate)
     {
-        this.OrderDate = OrderDate;
+        this.orderDate = orderDate;
     }
 
     /**
-     * @return the Status
+     * @return the status
      */
     public String getStatus()
     {
-        return Status;
+        return status;
     }
 
     /**
-     * @param Status the Status to set
+     * @param status the status to set
      */
-    public void setStatus(String Status)
+    public void setStatus(String status)
     {
-        this.Status = Status;
+        this.status = status;
     }
+
+    /**
+     * @return the price
+     */
+    public int getPrice()
+    {
+        return price;
+    }
+
+    /**
+     * @param price the price to set
+     */
+    public void setPrice(int price)
+    {
+        this.price = price;
+    }
+    
     
 }

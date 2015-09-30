@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.apache.struts2.ServletActionContext;
 
@@ -31,6 +32,7 @@ public class Login extends ActionSupport implements ModelDriven<LoginClass>
         try
         {   
             HttpServletRequest request= ServletActionContext.getRequest();
+            HttpServletResponse response;
             PreparedStatement pst;
             ResultSet rs;
             HttpSession sess;
@@ -43,6 +45,7 @@ public class Login extends ActionSupport implements ModelDriven<LoginClass>
                 System.out.println(obj.getUsername());
                 if(sess==null)    
                 {*/
+                    response= ServletActionContext.getResponse();
                     System.out.println(obj.getUsername());
                     pst = con.prepareStatement("SELECT FirstName from MemberDetail where LoginID=?");
                     pst.setString(1,obj.getUsername());
@@ -68,6 +71,10 @@ public class Login extends ActionSupport implements ModelDriven<LoginClass>
                                 sess.setAttribute("LoginID", rs.getString(1));
                                 sess.setAttribute("Role", rs.getString(4));
                                 sess.setAttribute("Name", fname);
+                                if(rs.getString(4).equals("Admin"))
+                                {
+                                    return "Admin";
+                                }
                                 return "Success";
                             }
                             else
